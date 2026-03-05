@@ -1,0 +1,16 @@
+@supports (anchor-name: --test) {
+  body::before {
+    position: fixed;
+    z-index: 1;
+    content: "お使いのブラウザは、CSS Anchor Positioning をサポートしていません。";
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>複数のアンカーを基準にする</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+
+    .anchor-a {
+      anchor-name: --anchor-a;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      padding: 8px 16px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .anchor-b {
+      anchor-name: --anchor-b;
+      position: absolute;
+      top: 200px;
+      right: 100px;
+      padding: 8px 16px;
+      background-color: #e8711a;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .positioned {
+      position: absolute;
+      /* position-anchor は指定しない。anchor() の引数でアンカー名を直接指定する */
+      top: anchor(--anchor-a bottom);
+      left: anchor(--anchor-a right);
+      bottom: anchor(--anchor-b top);
+      right: anchor(--anchor-b left);
+      margin: 8px;
+      background-color: rgba(26, 115, 232, 0.1);
+      border: 2px dashed #1a73e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="anchor-a">アンカーA</div>
+  <div class="anchor-b">アンカーB</div>
+  <div class="positioned">AとBの間</div>
+</body>
+</html>

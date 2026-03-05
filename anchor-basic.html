@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>ボタンの下にツールチップを表示する</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      width: fit-content;
+      padding: 8px 16px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .tooltip {
+      position: absolute;
+      position-anchor: --my-anchor;
+      top: calc(anchor(bottom) + 8px);
+      left: anchor(center);
+      translate: -50% 0;
+      padding: 8px 16px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* 吹き出しの三角（上向き） */
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      translate: -50% 0;
+      border: 6px solid transparent;
+      border-top: none;
+      border-bottom-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="anchor">アンカー要素</div>
+  <div class="tooltip">ツールチップのテキストが入ります</div>
+</body>
+</html>

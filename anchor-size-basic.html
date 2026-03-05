@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>ツールチップをアンカーと同じ幅にする</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      width: 200px;
+      padding: 8px 16px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .tooltip {
+      position: absolute;
+      position-anchor: --my-anchor;
+      position-area: bottom center;
+      width: anchor-size(width); /* アンカー要素の幅を参照 */
+      margin: 8px;
+      padding: 8px 16px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    /* 吹き出しの三角（上向き）
+       ツールチップ幅 = アンカー幅なので left: 50% がアンカーの中央 */
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      translate: -50% 0;
+      border: 6px solid transparent;
+      border-top: none;
+      border-bottom-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="anchor">アンカー要素（幅200px）</div>
+  <div class="tooltip">アンカーと同じ幅のツールチップ</div>
+</body>
+</html>

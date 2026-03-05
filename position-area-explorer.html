@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>position-area の値を試す</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100dvh;
+      background-color: #f5f5f5;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% calc(-50% + 28px); /* コントロール分を補正 */
+      padding: 12px 20px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .tooltip {
+      position: absolute;
+      position-anchor: --my-anchor;
+      position-area: bottom center;
+      margin: 8px;
+      padding: 8px 12px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .controls label {
+      font-size: 14px;
+      font-family: monospace;
+    }
+
+    .controls select {
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="anchor">アンカー</div>
+  <div class="tooltip" id="tooltip">bottom center</div>
+
+  <div class="controls">
+    <label for="select">position-area:</label>
+    <select id="select"></select>
+  </div>
+
+  <script>
+    const select = document.getElementById('select');
+    const tooltip = document.getElementById('tooltip');
+
+    const groups = [
+      ['top', [
+        'top left',
+        'top center',
+        'top right',
+        'top',
+        'top span-all',
+      ]],
+      ['bottom', [
+        'bottom left',
+        'bottom center',
+        'bottom right',
+        'bottom',
+        'bottom span-all',
+      ]],
+      ['left', [
+        'left top',
+        'left center',
+        'left bottom',
+        'left',
+        'left span-all',
+      ]],
+      ['right', [
+        'right top',
+        'right center',
+        'right bottom',
+        'right',
+        'right span-all',
+      ]],
+      ['center', [
+        'center',
+        'span-all',
+      ]],
+    ];
+
+    groups.forEach(([label, values]) => {
+      const group = document.createElement('optgroup');
+      group.label = label;
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        if (value === 'bottom center') option.selected = true;
+        group.appendChild(option);
+      });
+      select.appendChild(group);
+    });
+
+    select.addEventListener('change', () => {
+      tooltip.style.setProperty('position-area', select.value);
+      tooltip.textContent = select.value;
+    });
+  </script>
+</body>
+</html>
