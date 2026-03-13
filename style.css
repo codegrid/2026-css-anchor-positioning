@@ -1,4 +1,4 @@
-@supports (anchor-name: --test) {
+@supports not (anchor-name: --test) {
   body::before {
     position: fixed;
     z-index: 1;
