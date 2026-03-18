@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>anchor() の引数を試す</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100dvh;
+      background-color: #f5f5f5;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% calc(-50% + 70px);
+      padding: 12px 20px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+      border: 3px solid transparent;
+    }
+
+    .target {
+      position: absolute;
+      position-anchor: --my-anchor;
+      padding: 8px 12px;
+      background-color: #6f42c1;
+      color: #fff;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      border: 3px solid transparent;
+    }
+
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 4px;
+      font-family: sans-serif;
+    }
+
+    .code-block {
+      font-size: 14px;
+      font-family: monospace;
+      line-height: 2;
+      white-space: pre;
+    }
+
+    .code-block select {
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-family: monospace;
+      background: #fff;
+      white-space: normal;
+      vertical-align: middle;
+    }
+
+    .code-block .punctuation {
+      color: #999;
+    }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .presets button {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .presets button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .presets button.is-active {
+      background-color: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+  </style>
+</head>
+<body>
+  <div class="anchor">アンカー要素</div>
+  <div class="target" id="target">top: anchor(top)<br>left: anchor(right)</div>
+
+  <div class="controls">
+    <div>
+    <div class="section-label">プロパティと値を変更する</div>
+    <div class="code-block"><span>.target {
+  </span><select id="v-prop-select">
+      <option value="top" selected>top</option>
+      <option value="bottom">bottom</option>
+    </select><span>: anchor(</span><select id="v-side-select">
+      <option value="top" selected>top</option>
+      <option value="right">right</option>
+      <option value="bottom">bottom</option>
+      <option value="left">left</option>
+      <option value="center">center</option>
+    </select><span class="punctuation">);
+  </span><select id="h-prop-select">
+      <option value="left">left</option>
+      <option value="right">right</option>
+    </select><span>: anchor(</span><select id="h-side-select">
+      <option value="top">top</option>
+      <option value="right" selected>right</option>
+      <option value="bottom">bottom</option>
+      <option value="left">left</option>
+      <option value="center">center</option>
+    </select><span class="punctuation">);
+}</span></div>
+    </div>
+
+    <div>
+    <div class="section-label">プリセットから選ぶ</div>
+    <div class="presets" id="presets"></div>
+    </div>
+  </div>
+
+  <script>
+    const vPropSelect = document.getElementById('v-prop-select');
+    const vSideSelect = document.getElementById('v-side-select');
+    const hPropSelect = document.getElementById('h-prop-select');
+    const hSideSelect = document.getElementById('h-side-select');
+    const target = document.getElementById('target');
+    const anchorEl = document.querySelector('.anchor');
+    const presetsEl = document.getElementById('presets');
+
+    function applyHighlight(el, sides, color) {
+      el.style.borderTopColor    = sides.includes('top')    ? color : 'transparent';
+      el.style.borderRightColor  = sides.includes('right')  ? color : 'transparent';
+      el.style.borderBottomColor = sides.includes('bottom') ? color : 'transparent';
+      el.style.borderLeftColor   = sides.includes('left')   ? color : 'transparent';
+    }
+
+    const presets = [
+      { label: '左上', vProp: 'bottom', vSide: 'top',    hProp: 'right', hSide: 'left'   },
+      { label: '上',   vProp: 'bottom', vSide: 'top',    hProp: 'left',  hSide: 'center' },
+      { label: '右上', vProp: 'bottom', vSide: 'top',    hProp: 'left',  hSide: 'right'  },
+      { label: '左',   vProp: 'top',    vSide: 'top',    hProp: 'right', hSide: 'left'   },
+      { label: '中心', vProp: 'top', vSide: 'center', hProp: 'left', hSide: 'center' },
+      { label: '右',   vProp: 'top',    vSide: 'top',    hProp: 'left',  hSide: 'right'  },
+      { label: '左下', vProp: 'top',    vSide: 'bottom', hProp: 'right', hSide: 'left'   },
+      { label: '下',   vProp: 'top',    vSide: 'bottom', hProp: 'left',  hSide: 'center' },
+      { label: '右下', vProp: 'top',    vSide: 'bottom', hProp: 'left',  hSide: 'right'  },
+    ];
+
+    presets.forEach((preset) => {
+      const btn = document.createElement('button');
+      btn.textContent = preset.label;
+      btn.addEventListener('click', () => {
+        applyPreset(preset);
+        document.querySelectorAll('.presets button').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+      });
+      presetsEl.appendChild(btn);
+    });
+
+    function applyPreset(preset) {
+      vPropSelect.value = preset.vProp;
+      vSideSelect.value = preset.vSide;
+      hPropSelect.value = preset.hProp;
+      hSideSelect.value = preset.hSide;
+      update();
+    }
+
+    function update() {
+      const vProp = vPropSelect.value;
+      const vSide = vSideSelect.value;
+      const hProp = hPropSelect.value;
+      const hSide = hSideSelect.value;
+
+      target.style.top = '';
+      target.style.bottom = '';
+      target.style.left = '';
+      target.style.right = '';
+
+      target.style[vProp] = `anchor(${vSide})`;
+      target.style[hProp] = `anchor(${hSide})`;
+
+      target.innerHTML = `${vProp}: anchor(${vSide})<br>${hProp}: anchor(${hSide})`;
+
+      // アンカー要素：参照している辺をハイライト
+      applyHighlight(anchorEl, [vSide, hSide], '#55deff');
+      // アンカー位置指定要素：使っているプロパティの辺をハイライト
+      applyHighlight(target, [vProp, hProp], '#ffa4a4');
+    }
+
+    // 初期値を適用
+    update();
+
+    // selectを変えたらアクティブ状態のプリセットを解除
+    [vPropSelect, vSideSelect, hPropSelect, hSideSelect].forEach(sel => {
+      sel.addEventListener('change', () => {
+        document.querySelectorAll('.presets button').forEach(b => b.classList.remove('is-active'));
+        update();
+      });
+    });
+  </script>
+</body>
+</html>

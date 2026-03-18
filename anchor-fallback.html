@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>アンカーが見つからない場合の代替値</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+    }
+
+    .controls {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      translate: -50% 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1;
+    }
+
+    .controls label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      padding: 12px 24px;
+      background-color: #1a73e8;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .anchor.is-hidden {
+      display: none;
+    }
+
+    .target {
+      position: absolute;
+      position-anchor: --my-anchor;
+      top: anchor(top, 100px);
+      left: calc(anchor(right, 100px) + 10px);
+      padding: 12px 24px;
+      background-color: #6f42c1;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label>
+      <input type="checkbox" id="toggle">
+      アンカー要素を非表示にする（<code>display: none</code>）
+    </label>
+  </div>
+
+  <div class="anchor" id="anchor">アンカー要素</div>
+  <div class="target">配置される要素</div>
+
+  <script>
+    document.getElementById('toggle').addEventListener('change', (e) => {
+      document.getElementById('anchor').classList.toggle('is-hidden', e.target.checked);
+    });
+  </script>
+</body>
+</html>
