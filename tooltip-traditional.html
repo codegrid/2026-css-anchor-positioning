@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>position-areaでツールチップを表示する</title>
+  <title>CSS Anchor Positioningを使わないツールチップ</title>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -20,8 +19,12 @@
       background-color: #f5f5f5;
     }
 
-    .anchor {
-      anchor-name: --my-anchor;
+    .button-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .button {
       width: fit-content;
       padding: 8px 16px;
       background-color: #1a73e8;
@@ -29,14 +32,14 @@
       border: none;
       border-radius: 4px;
       font-size: 1rem;
-      cursor: pointer;
+      cursor: default;
     }
 
     .tooltip {
       position: absolute;
-      position-anchor: --my-anchor;
-      position-area: bottom center;
-      margin: 8px;
+      top: calc(100% + 8px);
+      left: 50%;
+      translate: -50% 0;
       padding: 8px 16px;
       background-color: #333;
       color: #fff;
@@ -58,7 +61,9 @@
   </style>
 </head>
 <body>
-  <button class="anchor" type="button">アンカー要素</button>
-  <div class="tooltip">ツールチップのテキストが入ります</div>
+  <div class="button-wrapper">
+    <button class="button" type="button">ボタン</button>
+    <div class="tooltip">ツールチップのテキストが入ります</div>
+  </div>
 </body>
 </html>
