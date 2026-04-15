@@ -21,14 +21,15 @@
     }
 
     @keyframes move-anchor {
-      0%   { translate: 0px 0px; }
-      25%  { translate: 120px 0px; }
-      50%  { translate: 120px 80px; }
-      75%  { translate: 0px 80px; }
-      100% { translate: 0px 0px; }
+      0%   { top: 0px; left: 0px; }
+      25%  { top: 120px; left: 0px; }
+      50%  { top: 120px; left: 80px; }
+      75%  { top: 0px; left: 80px; }
+      100% { top: 0px; left: 0px; }
     }
 
     .anchor {
+      position: relative;
       anchor-name: --my-anchor;
       width: fit-content;
       padding: 8px 16px;
