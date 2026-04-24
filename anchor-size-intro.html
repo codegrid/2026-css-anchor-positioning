@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>anchor-size()の概要</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      font-family: sans-serif;
+      min-height: 100dvh;
+      background-color: #f5f5f5;
+    }
+
+    .controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background-color: #fff;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .anchor {
+      anchor-name: --my-anchor;
+      width: var(--anchor-width, 120px);
+      height: var(--anchor-height, 40px);
+      background-color: #1a73e8;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+
+    .tooltip {
+      position: absolute;
+      position-anchor: --my-anchor;
+      position-area: center right;
+      width: anchor-size(width);
+      height: anchor-size(height);
+      margin-left: 16px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 4px;
+      overflow: hidden;
+    }
+
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      translate: 0 -50%;
+      border: 6px solid transparent;
+      border-left: none;
+      border-right-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <div class="control-item">
+      <label for="width-range">アンカーの幅：</label>
+      <input id="width-range" type="range" min="80" max="200" value="120" step="10">
+      <output id="width-output">120px</output>
+    </div>
+    <div class="control-item">
+      <label for="height-range">アンカーの高さ：</label>
+      <input id="height-range" type="range" min="40" max="120" value="40" step="10">
+      <output id="height-output">40px</output>
+    </div>
+  </div>
+  <div class="anchor">アンカー要素</div>
+  <div class="tooltip">紐づいた要素</div>
+  <script>
+    const widthRange = document.getElementById('width-range');
+    const widthOutput = document.getElementById('width-output');
+    const heightRange = document.getElementById('height-range');
+    const heightOutput = document.getElementById('height-output');
+
+    widthRange.addEventListener('input', () => {
+      document.documentElement.style.setProperty('--anchor-width', `${widthRange.value}px`);
+      widthOutput.textContent = `${widthRange.value}px`;
+    });
+
+    heightRange.addEventListener('input', () => {
+      document.documentElement.style.setProperty('--anchor-height', `${heightRange.value}px`);
+      heightOutput.textContent = `${heightRange.value}px`;
+    });
+  </script>
+</body>
+</html>
