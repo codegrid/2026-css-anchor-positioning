@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@position-tryでカスタム配置を定義する</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 2rem;
+      height: 200vh;
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      display: grid;
+      place-items: start center;
+    }
+
+    .anchor {
+      anchor-name: --anchor;
+      margin-top: 90vh;
+      padding: 8px 14px;
+      background-color: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    @position-try --tooltip-above {
+      position-area: top right;
+      width: 300px;
+      margin: 16px;
+    }
+
+    .tooltip {
+      position: fixed;
+      position-anchor: --anchor;
+      position-area: bottom center;
+      margin: 8px 0 0 0;
+      position-try-fallbacks: --tooltip-above;
+      padding: 8px 12px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <button class="anchor">アンカー要素</button>
+  <div class="tooltip">ツールチップ</div>
+</body>
+</html>

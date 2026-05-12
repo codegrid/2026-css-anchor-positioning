@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>position-visibility: alwaysでツールチップを常に表示する</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 300px;
+    }
+
+    body {
+      margin: 0;
+      height: 300px;
+      overflow: hidden;
+      font-family: sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    .list-panel {
+      width: 200px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .list-header {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: bold;
+      color: #888;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #f0f0f0;
+      background: #fafafa;
+    }
+
+    .list {
+      height: 236px;
+      overflow-y: auto;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      gap: 10px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .item--active {
+      anchor-name: --tooltip-anchor;
+      background-color: #eff6ff;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .item:nth-child(1) .avatar { background: #1a73e8; }
+    .item:nth-child(2) .avatar { background: #34a853; }
+    .item:nth-child(3) .avatar { background: #ea4335; }
+    .item:nth-child(4) .avatar { background: #f59e0b; }
+    .item:nth-child(5) .avatar { background: #8b5cf6; }
+    .item:nth-child(6) .avatar { background: #0d9488; }
+    .item:nth-child(7) .avatar { background: #e11d48; }
+    .item:nth-child(8) .avatar { background: #f97316; }
+
+    .name {
+      font-size: 13px;
+      color: #333;
+    }
+
+    .tooltip {
+      position: fixed;
+      position-anchor: --tooltip-anchor;
+      position-area: center right;
+      margin: 0 0 0 8px;
+      padding: 5px 10px;
+      background: #1e293b;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 11px;
+      white-space: nowrap;
+      position-visibility: always;
+    }
+
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 50%;
+      translate: 0 -50%;
+      border: 5px solid transparent;
+      border-left: none;
+      border-right-color: #1e293b;
+    }
+  </style>
+</head>
+<body>
+  <div class="list-panel">
+    <div class="list-header">ユーザー一覧（スクロールできます）</div>
+    <div class="list">
+      <div class="item">
+        <span class="avatar">田</span>
+        <span class="name">田中 一郎</span>
+      </div>
+      <div class="item">
+        <span class="avatar">鈴</span>
+        <span class="name">鈴木 花子</span>
+      </div>
+      <div class="item item--active">
+        <span class="avatar">佐</span>
+        <span class="name">佐藤 次郎</span>
+      </div>
+      <div class="item">
+        <span class="avatar">山</span>
+        <span class="name">山田 三恵</span>
+      </div>
+      <div class="item">
+        <span class="avatar">高</span>
+        <span class="name">高橋 四郎</span>
+      </div>
+      <div class="item">
+        <span class="avatar">渡</span>
+        <span class="name">渡辺 五月</span>
+      </div>
+      <div class="item">
+        <span class="avatar">伊</span>
+        <span class="name">伊藤 六美</span>
+      </div>
+      <div class="item">
+        <span class="avatar">中</span>
+        <span class="name">中村 七海</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tooltip">バックエンドエンジニア</div>
+</body>
+</html>

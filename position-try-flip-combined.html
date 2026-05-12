@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>flip-block flip-inlineで対角方向に反転</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 350px;
+      overflow: hidden;
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .col {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .col + .col { border-top: 1px solid #c4d4e8; }
+
+    /* 上行：アンカーを左上に配置 */
+    .col-top-left {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    /* 下行：アンカーを右下に配置 */
+    .col-bottom-right {
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    .col-label {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      font-size: 12px;
+      color: #555;
+      margin: 0;
+    }
+
+    .col-top-left {
+      padding-top: 32px;
+    }
+
+    .anchor {
+      padding: 8px 14px;
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .anchor-a { anchor-name: --anchor-a; }
+    .anchor-b { anchor-name: --anchor-b; }
+
+    .tooltip {
+      position: fixed;
+      position-area: bottom right;
+      position-try-fallbacks: flip-block flip-inline;
+      margin: 8px;
+      padding: 6px 10px;
+      background: #333;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tooltip-a { position-anchor: --anchor-a; }
+    .tooltip-b { position-anchor: --anchor-b; }
+  </style>
+</head>
+<body>
+  <div class="col col-top-left">
+    <p class="col-label">アンカーが左上 → 右下に表示</p>
+    <button class="anchor anchor-a">アンカー要素</button>
+  </div>
+  <div class="col col-bottom-right">
+    <p class="col-label">アンカーが右下 → flip-block flip-inlineで左上に反転</p>
+    <button class="anchor anchor-b">アンカー要素</button>
+  </div>
+  <div class="tooltip tooltip-a">ツールチップ</div>
+  <div class="tooltip tooltip-b">ツールチップ</div>
+</body>
+</html>

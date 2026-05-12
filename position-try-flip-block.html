@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flip-blockでツールチップを反転させる</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 2rem;
+      height: 200vh;
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      display: grid;
+      place-items: start center;
+    }
+
+    .anchor {
+      anchor-name: --anchor;
+      margin-top: 90vh;
+      padding: 8px 14px;
+      background-color: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tooltip {
+      position: fixed;
+      position-anchor: --anchor;
+      position-area: bottom;
+      position-try-fallbacks: flip-block;
+      margin-top: 1rem;
+      padding: 8px 12px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <button class="anchor">アンカー要素</button>
+  <div class="tooltip">ツールチップ</div>
+</body>
+</html>
